@@ -1,0 +1,104 @@
+
+
+#欢迎界面
+def hello():
+	print("*********************************")
+	print("1. 新建学生信息")
+	print("2. 显示全部学生")
+	print("3. 查询学生信息")
+	print("0. 保存并退出系统")
+	print("*********************************")
+	choice = eval(input("请选择你想使用的功能: "))
+	if choice == 1:
+		new_file()
+	elif choice == 2:
+		print_student()
+	elif choice == 3:
+		search_student()
+	elif choice == 0:
+		out_student() 
+	else:
+		print("输入错误,请重新输入")
+		hello()
+
+
+def new_file():
+	StdDict = {}
+	
+	student_name = input("学生姓名: ")
+	student_phone = input("学生电话号码: ")
+	student_QQ = input("学生QQ: ")
+	student_email = input("学生email: ")
+	StdDict['name'] = student_name
+	StdDict['phone'] = student_phone
+	StdDict['QQ'] = student_QQ
+	StdDict['email'] = student_email
+	std.append(StdDict)
+	end1 = input("添加学生信息成功,是否继续Y/N:")
+
+	if end1 == "Y" :
+		new_file()
+	else:
+		hello()
+
+
+
+
+def print_student():
+	print("姓名      电话号码       QQ          email")
+	for temp in std:
+		print("%-10s%-14s%-12s%-10s"%(temp['name'],temp['phone'],temp['QQ'],temp['email']))
+	hello()
+
+def search_student():
+	student_input = input("请输入要查询的学生姓名: ")
+	#查询,当学生姓名存在时,返回所有信息,反之则提示不存在
+	#这边函数没做完
+	for temp in std:
+		if student_input == temp['name']:
+			print("您查询的学生信息如下:")
+			print("姓名      电话号码       QQ          email")
+			print("%-10s%-14s%-12s%-10s"%(temp['name'],temp['phone'],temp['QQ'],temp['email']))
+			information_input = eval(input("对学生信息:1.修改,2.删除,0.不作任何处理,请选择: "))
+			#修改学生
+			if information_input == 1:	
+				student1_phone = input("要修改的学生电话号码: ")
+				student1_QQ = input("要修改学生QQ: ")
+				student1_email = input("要修改学生email: ")
+				temp['phone'] = student1_phone
+				temp['QQ'] = student1_QQ
+				temp['email'] = student1_email
+				print("修改成功")
+				print_student()
+				hello()         
+			elif information_input == 2:
+				#删除学生信息
+				indexId = std.index(temp)
+				del std[indexId]
+				print("删除成功")
+				print_student()
+				hello()
+
+			else:
+				pass
+				hello()
+		else:
+			print("输入错误,请输入正确数字")
+			search_student()
+
+	
+
+def out_student():
+	fo = open("/media/mars_tang/elementary/学生信息管理系统/student.txt",'a+')
+	fo.write("姓名          电话号码           QQ			email\n")
+	for temp in std:
+		fo.write("%-10s%-11s%-12s%-10s"%(temp['name'],temp['phone'],temp['QQ'],temp['email']))
+	fo.close()
+	print("保存文件成功,欢迎下次使用")
+
+
+
+
+
+std = []
+hello()
